@@ -16,6 +16,7 @@ package main;
  * informaciones que se han ido guardando en base de datos. Dicho listado deberá ser realizado con un JTable.
  *  Opcionales: Agregar al listado un botón de borrado y un botón de editar
  *  
+ * Subida a GitHub
  * Día 3 - 
  *  Opcionales: Dar un mensaje de guardado de datos
  *  	Borrar los valores de la tabla al insertar una nueva fila
