@@ -2,7 +2,8 @@ package modelo;
 
 public class Evento {
 
-	// titulo, descripcion, localizacion, organizador, tipo, fecha, importante
+	// id,titulo, descripcion, localizacion, organizador, tipo, fecha, importante
+	private int id;
 	private String titulo;
 	private String descripcion;
 	private String localizacion;
@@ -33,6 +34,20 @@ public class Evento {
 		this.tipo = tipo;
 		this.fecha = fecha;
 		this.importante = importante;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**

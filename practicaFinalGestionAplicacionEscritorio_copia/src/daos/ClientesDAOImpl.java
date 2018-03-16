@@ -46,7 +46,7 @@ public class ClientesDAOImpl implements ClientesDAO{
 			ps.setString(5, c.getTelefono());
 			ps.execute();
 			ps.close();
-			System.out.println("** Error: Cliente registrado correctamente");
+			System.out.println("Cliente registrado correctamente");
 		} catch (SQLException e) {
 			System.out.println("** Error: Fallo en la SQL");
 		}
@@ -54,7 +54,17 @@ public class ClientesDAOImpl implements ClientesDAO{
 	} // End registrarClientes
 
 	public void borrarCliente(int id) {
-		
+		try {
+			PreparedStatement ps = miConexion.prepareStatement(ConstantesSQL.sqlBorradoCliente);
+			ps.setInt(1, id);
+			ps.execute();
+			ps.close();
+			System.out.println("Cliente borrado correctamente");
+		} catch (SQLException e) {
+			System.out.println("Fallo en la SQL de borrarClientes");
+			// Más info del error
+			System.out.println(e.getMessage());
+		} // End try
 	}
 
 	public Cliente[] obtenerClientes() {
@@ -71,6 +81,7 @@ public class ClientesDAOImpl implements ClientesDAO{
 			while (resultado.next()) {
 				// DTO - Data transformation object
 				Cliente c = new Cliente();
+				c.setId(resultado.getInt("id"));
 				c.setNombre(resultado.getString("nombre"));
 				c.setDomicilio(resultado.getString("domicilio"));
 				c.setPoblacion(resultado.getString("poblacion"));

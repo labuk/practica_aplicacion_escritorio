@@ -51,13 +51,14 @@ public class TableModelsEventos extends AbstractTableModel {
 	public Object getValueAt(int indiceFila, int indiceColumna) {
 		// Boton borrar
 		if(indiceColumna == columnas.length-1){
-			JButton botonBorrar = new JButton("Borrar");
-			botonBorrar.setActionCommand("Borrar");
-			botonBorrar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					System.out.println("Se pulso el botón");
-				}
-			});
+//			JButton botonBorrar = new JButton("Borrar");
+//			botonBorrar.setActionCommand("Borrar");
+//			botonBorrar.addActionListener(new ActionListener() {
+//				public void actionPerformed(ActionEvent e) {
+//					System.out.println("Se pulso el botón");
+//				}
+//			});
+			String botonBorrar = "Barrar tabla";
 			return botonBorrar;
 		}
 		// Valores tabla

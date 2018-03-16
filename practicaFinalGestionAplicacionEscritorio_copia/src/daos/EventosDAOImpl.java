@@ -56,7 +56,17 @@ public class EventosDAOImpl implements EventosDAO{
 	} // End registrarEvento()
 
 	public void borrarEvento(int id) {
-		
+		try {
+			PreparedStatement ps = miConexion.prepareStatement(ConstantesSQL.sqlBorradoEvento);
+			ps.setInt(1, id);
+			ps.execute();
+			ps.close();
+			System.out.println("Cliente borrado correctamente");
+		} catch (SQLException e) {
+			System.out.println("Fallo en la SQL de borrarClientes");
+			// Más info del error
+			System.out.println(e.getMessage());
+		} // End try
 	}
 
 	public Evento[] obtenerEventos() {
@@ -67,6 +77,7 @@ public class EventosDAOImpl implements EventosDAO{
 			List<Evento> listEventos = new ArrayList<Evento>();
 			while (resultado.next()) {
 				Evento e = new Evento();
+				e.setId(resultado.getInt("id"));
 				e.setTitulo(resultado.getString("titulo"));
 				e.setDescripcion(resultado.getString("descripcion"));
 				e.setLocalizacion(resultado.getString("localizacion"));

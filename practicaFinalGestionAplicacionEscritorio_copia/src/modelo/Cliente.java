@@ -2,6 +2,7 @@ package modelo;
 
 public class Cliente {
 
+	private int id;
 	private String nombre;
 	private String domicilio;
 	private String poblacion;
@@ -27,6 +28,20 @@ public class Cliente {
 		this.codigoPostal = codigoPostal;
 		this.telefono = telefono;
 	} //  Cliente(String nombre, String domicilio, String poblacion, String codigoPostal, String telefono)
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	/**
 	 * @return the nombre
@@ -98,14 +113,14 @@ public class Cliente {
 		this.telefono = telefono;
 	}
 
-	/* 
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Cliente [nombre=" + nombre + ", domicilio=" + domicilio
-				+ ", poblacion=" + poblacion + ", codigoPostal=" + codigoPostal
-				+ ", telefono=" + telefono + "]";
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", domicilio="
+				+ domicilio + ", poblacion=" + poblacion + ", codigoPostal="
+				+ codigoPostal + ", telefono=" + telefono + "]";
 	}
 	
 	
