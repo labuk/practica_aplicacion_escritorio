@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import modelo.Cliente;
 import modelo.Evento;
 
@@ -46,10 +48,11 @@ public class EventosDAOImpl implements EventosDAO{
 			ps.setString(6, e.getFecha());
 			ps.setBoolean(7, e.getImportante());
 			ps.execute();
-			System.out.println("Ejecuta la sentencia");
 			ps.close();
+			JOptionPane.showMessageDialog(null, "Evento registrado correctamente");
 			System.out.println("Evento registrado correctamente");
 		} catch (SQLException e1) {
+			JOptionPane.showMessageDialog(null, "Error al registrar Evento");
 			System.out.println("** Error: Fallo en la SQL");
 		}
 		
@@ -61,9 +64,11 @@ public class EventosDAOImpl implements EventosDAO{
 			ps.setInt(1, id);
 			ps.execute();
 			ps.close();
-			System.out.println("Cliente borrado correctamente");
+			JOptionPane.showMessageDialog(null, "Evento borrado correctamente");
+			System.out.println("Evento borrado correctamente");
 		} catch (SQLException e) {
-			System.out.println("Fallo en la SQL de borrarClientes");
+			JOptionPane.showMessageDialog(null, "Error al borrar Evento");
+			System.out.println("Fallo en la SQL de borrarEvento");
 			// Más info del error
 			System.out.println(e.getMessage());
 		} // End try
@@ -91,6 +96,7 @@ public class EventosDAOImpl implements EventosDAO{
 			System.out.println("Eventos obtenidos de manera correcta");
 			ps.close();	
 		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Error al obtener la lista de Eventos");
 			System.out.println("Fallo en la SQL de obtenerEventos");
 		}
 		

@@ -2,6 +2,7 @@ package modelo;
 
 public class Cliente {
 
+	// id, nombre, domicilio, poblacion, codigoPostal, telefono
 	private int id;
 	private String nombre;
 	private String domicilio;

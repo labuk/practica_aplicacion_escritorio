@@ -11,7 +11,9 @@ import modelo.Cliente;
 public interface ClientesDAO {
 	
 	void registrarCliente(Cliente c);
+	void actualizarCliente(Cliente c);
 	void borrarCliente(int id);
+	Cliente obtenerClientePorId(int id);
 	// Array: conjunto de datos del mismo tipo
 	Cliente[] obtenerClientes();
 
