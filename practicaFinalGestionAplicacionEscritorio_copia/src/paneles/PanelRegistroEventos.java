@@ -1,5 +1,6 @@
 package paneles;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -7,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -15,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import daos.ClientesDAOImpl;
 import daos.EventosDAOImpl;
@@ -28,16 +31,16 @@ public class PanelRegistroEventos extends JPanel implements ActionListener{
 	JTextArea campoDescripcion = new JTextArea();
 	JTextField campoLocalizacion = new JTextField(18);
 	JTextField campoOrganizador = new JTextField(18);
-	String[] tipoStrings = { "Fiesta", "Deportivo", "Cultural", "Trabajo", "ReuniÃ³n" };
+	String[] tipoStrings = { "Fiesta", "Deportivo", "Cultural", "Trabajo", "Reunión" };
 	JComboBox campoTipo = new JComboBox(tipoStrings);
 	JTextField campoFecha = new JTextField(18);
 	JCheckBox campoImportante = new JCheckBox("Importante");
 	
-	JButton botonRegistroCliente = new JButton("Guardar");
+	JButton botonRegistroEvento = new JButton("Guardar");
 	
 	public PanelRegistroEventos() {
 
-		// AsÃ­ asigno un gestor de diseÃ±o que me permite colocar las cosas en forma de filas, columnas y celdas
+		// Así asigno un gestor de diseño que me permite colocar las cosas en forma de filas, columnas y celdas
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -54,7 +57,7 @@ public class PanelRegistroEventos extends JPanel implements ActionListener{
 		gbc.gridy = 1;
 		gbc.gridx = 0;
 		gbc.gridwidth = 1; // Cambia las celdas a 1 columna
-		this.add(new JLabel("TÃ­tulo evento: "),gbc);
+		this.add(new JLabel("Título evento: "),gbc);
 		// Fila: 1 - Elemento: 1
 		gbc.gridy = 1;
 		gbc.gridx = 1;
@@ -66,7 +69,9 @@ public class PanelRegistroEventos extends JPanel implements ActionListener{
 		campoDescripcion.setColumns(18);
 		campoDescripcion.setRows(5);
 		campoDescripcion.setLineWrap(true);
-		this.add(new JLabel("DescripciÃ³n: "),gbc);
+		// TextArea no tiene borde
+		campoDescripcion.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		this.add(new JLabel("Descripción: "),gbc);
 		// Fila: 2 - Elemento: 1
 		gbc.gridy = 2;
 		gbc.gridx = 1;
@@ -75,7 +80,7 @@ public class PanelRegistroEventos extends JPanel implements ActionListener{
 		// Fila: 3 - Elemento: 0
 		gbc.gridy = 3;
 		gbc.gridx = 0;
-		this.add(new JLabel("Lugar de celebraciÃ³n: "),gbc);
+		this.add(new JLabel("Lugar de celebración: "),gbc);
 		// Fila: 3 - Elemento: 1
 		gbc.gridy = 3;
 		gbc.gridx = 1;
@@ -124,14 +129,23 @@ public class PanelRegistroEventos extends JPanel implements ActionListener{
 		gbc.gridx = 0;
 		gbc.gridwidth = 2;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		botonRegistroCliente.addActionListener(this);
-		this.add(botonRegistroCliente, gbc);
+		botonRegistroEvento.addActionListener(this);
+		this.add(botonRegistroEvento, gbc);
 		
 	} // End PanelRegistroCliente()
 
+	private void cleanFormFields(){
+		campoTitulo.setText("");
+		campoDescripcion.setText("");
+		campoLocalizacion.setText("");
+		campoOrganizador.setText("");
+		campoImportante.setSelected(false);
+		campoFecha.setText("");
+	} // End cleanFormFields
+	
 	public void actionPerformed(ActionEvent arg0) {
 		// campoTitulo, campoDescripcion, campoLocalizacion, campoOrganizador, campoTipo, campoFecha, campoImportante
-		System.out.println("actionPerformed - botonRegistroCliente");
+		System.out.println("actionPerformed - botonRegistroEvento");
 		String titulo = campoTitulo.getText();
 		String descripcion = campoDescripcion.getText();
 		String localizacion = campoLocalizacion.getText();
@@ -139,7 +153,7 @@ public class PanelRegistroEventos extends JPanel implements ActionListener{
 		String tipo = "" + campoTipo.getSelectedItem(); 
 		String fecha = campoFecha.getText(); 
 		boolean importante = campoImportante.isSelected();
-		// Ahora habrÃ­a que validar estos datos
+		// Ahora habría que validar estos datos
 		// TODO Validar datos
 		
 		// Registramos datos en Base de Datos
@@ -148,6 +162,9 @@ public class PanelRegistroEventos extends JPanel implements ActionListener{
 		// Invoco a lo necesario de la capa de datos para registrar el cliente en base de datos
 		EventosDAOImpl eventosDAO = new EventosDAOImpl();
 		eventosDAO.registrarEvento(eventoARegistrar);
+		
+		// Limpiamos el formulario
+		this.cleanFormFields();
 		
 	} // End actionPerformed
 	

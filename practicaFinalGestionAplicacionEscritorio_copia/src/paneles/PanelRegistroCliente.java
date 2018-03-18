@@ -25,8 +25,7 @@ public class PanelRegistroCliente extends JPanel implements ActionListener{
 	
 	JButton botonRegistroCliente = new JButton("Guardar");
 	
-	public PanelRegistroCliente() {
-
+	public PanelRegistroCliente() {		
 		// Así asigno un gestor de diseño que me permite colocar las cosas en forma de filas, columnas y celdas
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -38,7 +37,7 @@ public class PanelRegistroCliente extends JPanel implements ActionListener{
 		gbc.gridy = 0;
 		gbc.gridx = 0;
 		gbc.gridwidth = 2; // Cambia las celdas a 2 columnas
-		this.add(new JLabel("Introduce los datos del cliente"),gbc);
+		this.add(new JLabel(this.setPanelTitle()),gbc);
 		
 		// Fila: 1 - Elemento: 0
 		gbc.gridy = 1;
@@ -96,6 +95,18 @@ public class PanelRegistroCliente extends JPanel implements ActionListener{
 		
 	} // End PanelRegistroCliente()
 
+	public String setPanelTitle(){
+		return "Introduce los datos del cliente";
+	}
+	
+	private void cleanFormFields(){
+		this.campoNombre.setText("");
+		this.campoDomicilio.setText("");
+		this.campoPoblacion.setText("");
+		this.campoCodigoPostal.setText("");
+		this.campoTelefono.setText("");
+	}
+	
 	public void actionPerformed(ActionEvent arg0) {
 		System.out.println("actionPerformed - botonRegistroCliente");
 		String nombre = campoNombre.getText();
@@ -112,6 +123,7 @@ public class PanelRegistroCliente extends JPanel implements ActionListener{
 		// Invoco a lo necesario de la capa de datos para registrar el cliente en base de datos
 		ClientesDAOImpl clientesDAO = new ClientesDAOImpl();
 		clientesDAO.registrarCliente(clienteARegistrar);
+		this.cleanFormFields();
 		
 	} // End actionPerformed
 	
