@@ -53,8 +53,8 @@ public class VentanaPrincipal extends JFrame implements ActionListener{
 		eventosListar.addActionListener(this);
 		
 		// Preparación de la ventana principal
-		this.setSize(800, 600);
-		this.setLocation(100, 100);
+		this.setSize(800, 400);
+		this.setLocation(100, 10);
 		//this.pack(); // Sólo tiene los menus
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	

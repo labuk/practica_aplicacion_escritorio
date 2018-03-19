@@ -41,7 +41,6 @@ public class PanelActualizoCliente extends PanelRegistroCliente{
 		cliente.setCodigoPostal(campoCodigoPostal.getText());
 		cliente.setTelefono(campoTelefono.getText());
 		System.out.println("Cliente a actualizar: " + cliente.toString());
-		clienteDAO.actualizarCliente(cliente);
 	}
 	
 }

@@ -3,9 +3,6 @@ package paneles;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowStateListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,7 +20,7 @@ import daos.ClientesDAO;
 import daos.ClientesDAOImpl;
 import modelo.Cliente;
 
-public class PanelListadoClientes extends JPanel implements ActionListener, Runnable{
+public class PanelListadoClientes extends JPanel implements ActionListener {
 
 	// Los List son muy fáciles de transformar un array con la funcion toArray
 	// La idea es dejar Cliente como array fijo porque no queremos que se modifique
@@ -36,22 +33,24 @@ public class PanelListadoClientes extends JPanel implements ActionListener, Runn
 	JButton botonBorrar = new JButton("Borrar");
 	JButton botonEditar = new JButton("Editar");
 	// Ventana emergent
-	VentanaEmergente ventanaEmergente = null;
-	boolean emergenteActiva = true;
-	Thread hilo = new Thread(this);
-	boolean flag;
+	VentanaEmergente ventanaEmergente = new VentanaEmergente(this);
 	
 	public PanelListadoClientes() {
 		this.add(new JLabel("Panel Listado de Clientes"));
+
+		// Estaba definido en refrescarClientes()
+		// Al llamar múltiples veces a esta función en para pintar, se añadían mñultiples listener y producía errores
+		botonBorrar.addActionListener(this);
+		botonEditar.addActionListener(this);
+		
 	} // End PanelListadoClientes()
 	
 	public void refrescarClientes(){
 		this.clientes = daoClientes.obtenerClientes();
 		tabla = new JTable(new TableModelClientes(clientes));
-		tabla.setPreferredScrollableViewportSize(new Dimension(750, 300));
+		tabla.setPreferredScrollableViewportSize(new Dimension(750, 200));
 		tabla.setFillsViewportHeight(true);
 		JScrollPane scrollPane = new JScrollPane(tabla);
-		
 		// Quito todo lo que tuviera antes dentro de el panel
 		removeAll();
 		// Al añadir un scroll pane
@@ -60,10 +59,10 @@ public class PanelListadoClientes extends JPanel implements ActionListener, Runn
 		//this.add(new JLabel("Panel Listado de CLientes"));
 		this.add(scrollPane);
 		this.add(botonBorrar);
-		botonBorrar.addActionListener(this);
 		this.add(botonEditar);
-		botonEditar.addActionListener(this);
+		
 		// Para refrescar el panel de listado hay que forzar el refresco
+		// OJO!! Cuidado con los Listener que los duplica
 		SwingUtilities.updateComponentTreeUI(this);
 	} // End refrescarClientes
 
@@ -87,41 +86,17 @@ public class PanelListadoClientes extends JPanel implements ActionListener, Runn
 				// Aunque la función no devuelve nada, puedes llamar a return directamente para decir que finaliza
 				return;
 			}
-			System.out.println();
-			
-			if(hilo.isAlive()){
+			//Únicamente una ventana emergente
+			if(ventanaEmergente.windowActive){
 				JOptionPane.showMessageDialog(null, "Ya tienes una ventana modificar abierta");
 			} else {
-				// Lanzamos el hilo
-				flag = true;
-				// Inicializamos la ventana emergente
-				ventanaEmergente = new VentanaEmergente();
 				// Añadimos el panel Actualizo cliente con los datos del cliente seleccionado
 				ventanaEmergente.addPanelActualizoCliente(clientes[tabla.getSelectedRow()].getId());
-				hilo = new Thread(this);
-				hilo.start();
 			}
 			
 		}
 
 	}
 
-	public void run() {
-		while(flag){
-			try {
-				// Al cerrar la ventanaEmergete tengo un error de un nulo... 
-				if(ventanaEmergente == null || ventanaEmergente.windowActive == false ){
-					flag = false;
-				}
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				flag = false;
-				System.out.println("Ventana cerrada-Actualizamos clientes");
-			}
-		}
-		// Al cerrar la ventana (windowActive == false) refrescamos lista clientes
-		this.refrescarClientes();
-		System.out.println("Cierra");
-	}
 
 } // End class
